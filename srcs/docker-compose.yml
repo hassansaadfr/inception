@@ -1,0 +1,43 @@
+version: "3"
+services:
+  nginx:
+    build:
+      context: requirements/nginx
+    container_name: nginx
+    # env_file: ".env"
+    ports:
+      - "443:443"
+    networks:
+      - network
+  # wordpress:
+  #   image: prismagraphql/prisma:1.34
+  #   networks:
+  #     - bridged-network
+  #   restart: always
+  #   ports:
+  #     - "8282:4466"
+  #   environment:
+  #     PRISMA_CONFIG: |
+  #       port: 4466
+  #       # managementApiSecret: ${PRISMA_MANAGEMENT_API_SECRET}
+  #       databases:
+  #         default:
+  #           database: mtp-v1
+  #           connector: mongo
+  #           uri: 'mongodb://prisma:prisma@mongo-db'
+  #           port: 27017
+  mysql:
+    env_file: ".env"
+    build:
+      context: requirements/mysql
+    container_name: mysql
+    env_file: ".env"
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - network
+volumes:
+  db:
+
+networks:
+  network:
