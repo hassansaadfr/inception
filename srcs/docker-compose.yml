@@ -1,11 +1,17 @@
 version: "3"
 services:
+  base:
+    build:
+      context: requirements/base_image
+    image: hsaadaou/alpine_base
+    container_name: alpine_base
   nginx:
-    depends_on: ['wordpress']
+    restart: on-failure
+    depends_on: ['base', 'wordpress']
     build:
       context: requirements/nginx
+    image: hsaadaou/nginx
     container_name: nginx
-    # env_file: ".env"
     ports:
       - "443:443"
       - "80:80"
@@ -14,7 +20,8 @@ services:
     networks:
       - network
   wordpress:
-    depends_on: ['mysql']
+    restart: on-failure
+    depends_on: ['base', 'mysql']
     env_file: ".env"
     build:
       args:
@@ -22,6 +29,7 @@ services:
         ADMIN_WP_USER: ${ADMIN_WP_USER}
         ADMIN_WP_PASS: ${ADMIN_WP_PASS}
       context: requirements/wordpress
+    image: hsaadaou/wordpress
     container_name: wordpress
     env_file: ".env"
     volumes:
@@ -29,6 +37,8 @@ services:
     networks:
       - network
   mysql:
+    depends_on: ['base']
+    restart: on-failure
     env_file: ".env"
     build:
       args:
@@ -37,10 +47,20 @@ services:
         ADMIN_WP_USER: ${ADMIN_WP_USER}
         ADMIN_WP_PASS: ${ADMIN_WP_PASS}
       context: requirements/mysql
+    image: hsaadaou/mysql
     container_name: mysql
     env_file: ".env"
     volumes:
       - mysql:/var/lib/mysql
+    networks:
+      - network
+  adminer:
+    depends_on: ['mysql']
+    restart: on-failure
+    build:
+      context: requirements/adminer
+    image: hsaadaou/adminer
+    container_name: adminer
     networks:
       - network
 volumes:
