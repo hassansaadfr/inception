@@ -5,13 +5,14 @@ wp core install --allow-root --path=/var/www/wordpress --url=https://hsaadaou.42
 
 wp plugin install log-emails disable-emails --activate --path=/var/www/wordpress
 wp plugin install redis-cache --activate --path=/var/www/wordpress
+wp redis enable --allow-root --path=/var/www/wordpress
 
 wp user create --path=/var/www/wordpress/ $USER1_WP_USER $USER1_WP_USER@$USER1_WP_USER.com --role=author --user_pass=$USER1_WP_PASS
 
-echo "define( 'WP_REDIS_HOST', 'redis' );" >> /var/www/wordpress/wp-config.php
-echo "define( 'WP_REDIS_PORT', 6379 );" >> /var/www/wordpress/wp-config.php
-echo "define( 'WP_REDIS_TIMEOUT', 1 );" >> /var/www/wordpress/wp-config.php
-echo "define( 'WP_REDIS_READ_TIMEOUT', 1 );" >> /var/www/wordpress/wp-config.php
-echo "define( 'WP_REDIS_DATABASE', 0 );" >> /var/www/wordpress/wp-config.php
+sed -i "20i define( 'WP_REDIS_HOST', 'redis' );" /var/www/wordpress/wp-config.php
+sed -i "21i define( 'WP_REDIS_PORT', 6379 );" /var/www/wordpress/wp-config.php
+sed -i "22i define( 'WP_REDIS_TIMEOUT', 1 );" /var/www/wordpress/wp-config.php
+sed -i "23i define( 'WP_REDIS_READ_TIMEOUT', 1 );" /var/www/wordpress/wp-config.php
+sed -i "24i define( 'WP_REDIS_DATABASE', 0 );" /var/www/wordpress/wp-config.php
 
 exec php-fpm7
