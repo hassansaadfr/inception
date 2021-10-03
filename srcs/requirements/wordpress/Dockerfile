@@ -6,7 +6,7 @@ ARG WP_DB_NAME
 ARG ADMIN_WP_USER
 ARG ADMIN_WP_PASS
 
-RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session composer
+RUN apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session composer php7-redis
 
 ADD https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /wp-cli.phar
 RUN chmod +x wp-cli.phar
