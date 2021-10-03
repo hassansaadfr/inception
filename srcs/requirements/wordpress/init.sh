@@ -8,10 +8,10 @@ wp plugin install redis-cache --activate --path=/var/www/wordpress
 
 wp user create --path=/var/www/wordpress/ $USER1_WP_USER $USER1_WP_USER@$USER1_WP_USER.com --role=author --user_pass=$USER1_WP_PASS
 
-echo "define( 'WP_REDIS_HOST', 'redis' );" >> /var/www/wp-config.php
-echo "define( 'WP_REDIS_PORT', 6379 );" >> /var/www/wp-config.php
-echo "define( 'WP_REDIS_TIMEOUT', 1 );" >> /var/www/wp-config.php
-echo "define( 'WP_REDIS_READ_TIMEOUT', 1 );" >> /var/www/wp-config.php
-echo "define( 'WP_REDIS_DATABASE', 0 );" >> /var/www/wp-config.php
+echo "define( 'WP_REDIS_HOST', 'redis' );" >> /var/www/wordpress/wp-config.php
+echo "define( 'WP_REDIS_PORT', 6379 );" >> /var/www/wordpress/wp-config.php
+echo "define( 'WP_REDIS_TIMEOUT', 1 );" >> /var/www/wordpress/wp-config.php
+echo "define( 'WP_REDIS_READ_TIMEOUT', 1 );" >> /var/www/wordpress/wp-config.php
+echo "define( 'WP_REDIS_DATABASE', 0 );" >> /var/www/wordpress/wp-config.php
 
 exec php-fpm7
