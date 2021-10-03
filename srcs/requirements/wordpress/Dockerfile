@@ -1,5 +1,7 @@
 FROM hsaadaou/alpine_base
 
+RUN addgroup root mygrp
+
 ARG WP_DB_NAME
 ARG ADMIN_WP_USER
 ARG ADMIN_WP_PASS

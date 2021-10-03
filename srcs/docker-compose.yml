@@ -63,6 +63,33 @@ services:
     container_name: adminer
     networks:
       - network
+  redis:
+    depends_on: ['base']
+    restart: on-failure
+    build:
+      context: requirements/redis
+    image: hsaadaou/redis
+    container_name: redis
+    networks:
+      - network
+  ftp:
+    depends_on: ['wordpress']
+    restart: on-failure
+    ports:
+      - "20:20"
+      - "21:21"
+      - "30020:30020"
+      - "30021:30021"
+      - "30022:30022"
+    build:
+      context: requirements/ftp
+    image: hsaadaou/ftp
+    env_file: ".env"
+    container_name: ftp
+    networks:
+      - network
+    volumes:
+      - wp:/var/www/wordpress
 volumes:
   mysql:
     driver: local

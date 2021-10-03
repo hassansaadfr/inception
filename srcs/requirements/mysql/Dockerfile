@@ -5,6 +5,8 @@ ARG WP_DB_NAME
 ARG ADMIN_WP_USER
 ARG ADMIN_WP_PASS
 
+RUN addgroup root mygrp
+
 RUN apk add mariadb mariadb-common mariadb-client
 
 COPY init.sh .
