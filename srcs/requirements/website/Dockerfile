@@ -4,8 +4,10 @@ RUN apk add nodejs npm
 
 WORKDIR /srv
 
-COPY build build
+COPY src srcs
+COPY public public
 COPY package.json package.json
 
 RUN npm i -y
+RUN npm run build
 CMD ["npm", "run", "serve"]
