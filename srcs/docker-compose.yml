@@ -7,7 +7,7 @@ services:
     container_name: alpine_base
   nginx:
     restart: on-failure
-    depends_on: ['base', 'wordpress', 'netdata']
+    depends_on: ['base', 'wordpress', 'netdata', 'website']
     build:
       context: requirements/nginx
     image: hsaadaou/nginx
@@ -55,7 +55,7 @@ services:
     networks:
       - network
   adminer:
-    depends_on: ['mysql']
+    depends_on: ['base', 'mysql']
     restart: on-failure
     build:
       context: requirements/adminer
@@ -73,7 +73,7 @@ services:
     networks:
       - network
   ftp:
-    depends_on: ['wordpress']
+    depends_on: ['base', 'wordpress']
     restart: on-failure
     ports:
       - "20:20"
@@ -91,12 +91,22 @@ services:
     volumes:
       - wp:/var/www/wordpress
   netdata:
+    depends_on: ['base']
     restart: on-failure
     build:
       context: requirements/netdata
     image: hsaadaou/netdata
     env_file: ".env"
     container_name: netdata
+    networks:
+      - network
+  website:
+    depends_on: ['base']
+    restart: on-failure
+    build:
+      context: requirements/website
+    image: hsaadaou/website
+    container_name: website
     networks:
       - network
 volumes:

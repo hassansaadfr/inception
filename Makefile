@@ -20,6 +20,7 @@ rm_ctnrs	:
 				@docker container rm ftp ; true
 				@docker container rm redis ; true
 				@docker container rm netdata ; true
+				@docker container rm website ; true
 
 rm_volumes	:
 				@docker volume rm srcs_mysql ; true
@@ -35,10 +36,10 @@ rm_images	:
 				@docker image rm hsaadaou/redis ; true
 				@docker image rm hsaadaou/netdata ; true
 				@docker image rm hsaadaou/alpine_base ; true
+				@docker image rm hsaadaou/website ; true
 
 fclean		:	clean rm_ctnrs rm_volumes rm_images
 				cat /etc/hosts | grep hsaadaou.42.fr && sudo sed -i '$d' /etc/hosts
-
 
 re			:	fclean all
 
