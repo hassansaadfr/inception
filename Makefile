@@ -7,10 +7,10 @@ all			:
 				@sudo chmod 775 ${HOME}/data/wordpress
 				@sudo chmod g+s ${HOME}/data/
 				@cat /etc/hosts | grep hsaadaou.42.fr ||  echo '127.0.0.1 hsaadaou.42.fr' | sudo tee -a /etc/hosts
-				cd srcs && docker-compose up --build -d
+				@cd srcs && docker-compose up --build -d
 
 clean		:
-				cd srcs && docker-compose down
+				@cd srcs && docker-compose down
 
 rm_ctnrs	:
 				@docker container rm nginx ; true
@@ -21,6 +21,7 @@ rm_ctnrs	:
 				@docker container rm redis ; true
 				@docker container rm netdata ; true
 				@docker container rm website ; true
+				@docker container rm alpine_base ; true
 
 rm_volumes	:
 				@docker volume rm srcs_mysql ; true
@@ -39,7 +40,8 @@ rm_images	:
 				@docker image rm hsaadaou/website ; true
 
 fclean		:	clean rm_ctnrs rm_volumes rm_images
-				cat /etc/hosts | grep hsaadaou.42.fr && sudo sed -i '$d' /etc/hosts
+				@cat /etc/hosts | grep hsaadaou.42.fr && sudo sed -i '$ d' /etc/hosts ; true
+				@docker container prune -f
 
 re			:	fclean all
 
