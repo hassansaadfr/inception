@@ -9,6 +9,7 @@ WORKDIR /srv
 COPY src src
 COPY public public
 COPY package.json package.json
+COPY package-lock.json package-lock.json
 
 RUN npm i --silent
 RUN npm run build
