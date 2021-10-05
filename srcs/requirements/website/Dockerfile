@@ -2,8 +2,6 @@ FROM hsaadaou/alpine_base
 
 RUN apk add nodejs npm
 
-ARG PUBLIC_URL https://hsaadaou.42.fr/website
-
 WORKDIR /srv
 
 COPY src src
