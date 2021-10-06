@@ -1,4 +1,5 @@
 all			:
+				@sudo service nginx stop ; true
 				@mkdir -p ${HOME}/data/mysql
 				@mkdir -p ${HOME}/data/wordpress
 				@sudo chown :1042 ${HOME}/data/mysql
@@ -11,6 +12,7 @@ all			:
 
 clean		:
 				@cd srcs && docker-compose down
+				@sudo service nginx start ; true
 
 rm_ctnrs	:
 				@docker container rm nginx ; true
